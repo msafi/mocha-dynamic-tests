@@ -1,5 +1,7 @@
 # Mocha Dynamic Tests
 
+If you want to test your code against a bunch of slightly different inputs, writing a bunch of Mocha `it` statements becomes tedious. Instead, you can use this package to define your tests as an array of plain JavaScript objects and pass those to Mocha's `it`. These are called dynamic tests.
+
 Mocha naturally supports [dynamic tests](https://mochajs.org/#dynamically-generating-tests)
 (also known as parameterized tests). However, this package eliminates some of the cruft
 involved in writing dynamic tests that also support `it.skip` and `it.only`.
