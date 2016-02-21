@@ -1,7 +1,7 @@
 {
   "name": "mocha-dynamic-tests",
   "version": "1.1.0",
-  "description": "Runs an array of test parameters through Mocha's \"it\"",
+  "description": "Runs an array of test parameters through Mocha's `it`",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,7 +15,7 @@
     "tests"
   ],
   "author": "M.K. Safi",
-  "license": "ISC",
+  "license": "CC0-1.0",
   "bugs": {
     "url": "https://github.com/msafi/mocha-dynamic-tests/issues"
   },
