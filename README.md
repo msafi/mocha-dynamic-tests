@@ -21,38 +21,66 @@ describe('myTokenizer', function() {
     expect(myTokenizer('123')).to.be.an('array')
   })
 
-  dynamicTests([
-    {input: '123', expected: [1,2,3]},
-    {input: '432', expected: [4,3,2]},
-    {input: '4 8 0', expected: [4, '', 8, '', 0]},
-    {input: null, expected: null, skip: true}, // will implement later
-    {input: 123, expected: [1,2,3], only: true} // only run this one while I work on it
-  ], function(test) {
-    return {
-      description: 'returns ' + JSON.stringify(test.expected) + ' for input ' + test.input
-      body: function() {
-        expect(myTokenizer(test.input)).to.deep.equal(test.expected)
+  dynamicTests(
+    [
+      {input: '123', expected: [1,2,3]},
+      {input: '432', expected: [4,3,2]},
+      {input: '4 8 0', expected: [4, '', 8, '', 0]},
+      {input: null, expected: null, skip: true}, // will implement later
+      {input: 123, expected: [1,2,3], only: true} // only run this one while I work on it
+    ],
+
+    // Each test object will be passed to this call back function
+    function(test) {
+      return {
+        description: 'returns ' + JSON.stringify(test.expected) + ' for input ' + test.input
+        body: function() {
+          expect(myTokenizer(test.input)).to.deep.equal(test.expected)
+        }
       }
     }
-  })
+  )
 })
 ```
 
 ### API
 
-`dynamicTests` accepts two arguments:
+`dynamicTests` accepts three arguments:
 
 * array of test objects
 * function that returns the test details
+* object of options
 
-#### Array of test objects
+#### Test objects array
 
 The array of tests is an array of objects. The only special property names of the object
 are `skip` and `only`. Those will be used to decide whether to execute Mocha's
 `it.only`, `it.skip`, or just `it`. Other property names are yours.
 
-#### Function that returns test details
+#### Test details function
 
 This function must return an object that contains `description` and `body` properties that
 will be passed to Mocha's `it` as such `it(test.description, test.body)`.
 Therefore, `description` must be a string, and `body` must be a function.
+
+#### Options object
+
+Using the options object, you can skip all dynamic tests or only run dynamic tests. Pass
+the `options` object such as `{skip: true}` or `{only: true}`. For example, the following
+will cause for only the dynamic tests to run. All other tests in your test suite will be ignored:
+
+```js
+dynamicTests(
+  [
+    /* A bunch test parameters... */
+  ],
+
+  function(test) {
+    return {
+      /* test description and body... */
+    }
+  },
+
+  {only: true} // or {skip: true}
+)
+```
