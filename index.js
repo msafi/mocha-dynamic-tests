@@ -1,36 +1,12 @@
-module.exports = function(arrayOfTests, generateTestDetails, options) {
+module.exports = function(arrayOfTests, generateTestDefinition) {
   arrayOfTests = arrayOfTests || []
-  generateTestDetails = generateTestDetails || function() {}
-  options = options || {}
+  generateTestDefinition = generateTestDefinition || function() {}
 
-  var testsName = 'Dynamic tests'
-  var runTests = function() {
-    arrayOfTests.forEach(function (test) {
-      test = test || {}
+  arrayOfTests.forEach(function (test) {
+    test = test || {}
 
-      var testDetails = generateTestDetails(test) || {}
+    var testDefinition = generateTestDefinition(test) || {}
 
-      if (test.only === true) {
-        it.only.call(null, testDetails.description, testDetails.body)
-      } else if (test.skip === true) {
-        it.skip.call(null, testDetails.description, testDetails.body)
-      } else {
-        it.call(null, testDetails.description, testDetails.body)
-      }
-    })
-  }
-
-  if (options.only === true) {
-    describe.only(testsName, function() {
-      runTests()
-    })
-  } else if (options.skip === true) {
-    describe.skip(testsName, function() {
-      runTests()
-    })
-  } else {
-    describe(testsName, function() {
-      runTests()
-    })
-  }
+    it(testDefinition.description, testDefinition.body)
+  })
 }
